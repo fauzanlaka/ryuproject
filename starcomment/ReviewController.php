@@ -39,4 +39,10 @@ class PostRatingController extends Controller
             'star' => $star,
         ];
     }
+    public function starScore($id)
+    {
+        //จำนวนคะแนน (ดาว) เฉลี่ย
+        $score = PostRating::where('post_id', $id)->avg('star_rate');
+        return ['score' => number_format($score, 0) ];
+    }
 }
