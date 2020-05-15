@@ -2,8 +2,14 @@
     <div class="container-fluid">
         <div class="row mt-3">
             <div class="col-md-12">
-                 <h1>รายละเอียดกระทู้ : {{id}}</h1>
-
+                <h1>รายละเอียดกระทู้ : {{id}}</h1>
+                <p>The new rule bars semiconductor-makers that use US technology and software in chip design from shipping to Huawei without US government permission.</p>
+                <p>It is the latest US action to target Huawei, which US officials view as a national security threat.</p>
+                <p>China threatened to retaliate against US tech firms.</p>
+                <p>The tightened controls come a year after the US moved to cut off Huawei, the world's second largest smart phone maker, from access to US-made semiconductor chips, which form the backbone of most computer and phone systems.</p>
+                
+                <p>คะแนน : {{starScore}} ดาว</p>
+                
                 <!-- ให้คะแนนกระทู้ -->
                 <div class="rate">
                     <input type="radio" id="star5" name="rate" :value="5" v-model="starLevel" @click="giveStar($event.target.value)"/>
@@ -28,14 +34,29 @@
 <script>
     export default {
         props:{
-            id: ''
+            id: ''//id ของ review นั้นๆ วิธีที่จะรับ id นี้อาจไม่เหมือนของที่เราทำ
+        },
+        mounted(){
+            this.getStarScore();
         },
         data(){
             return{
+                starScore: '',
                 starLevel: '',
             }
         },
         methods:{
+            //ดึงคะเเนนเฉลี่ยน (ดาว)
+            getStarScore(){
+                axios.get('/api/starScore/'+this.id)
+                    .then(r => {
+                        this.starScore = r.data.score;
+                    })
+                    .catch(() => {
+
+                    })
+            },
+            //บันทึกการให้คะแนน (ดาว)
             giveStar(star){
                 axios.post('/api/giveStar',{
                     'star':star,
