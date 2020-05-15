@@ -1,0 +1,11 @@
+//เพื่อสร้างตาราง
+
+Schema::create('post_ratings', function (Blueprint $table) {
+  $table->bigIncrements('id');
+  $table->unsignedBigInteger('user_id');
+  $table->foreign('user_id')->references('id')->on('users');
+  $table->unsignedBigInteger('post_id'); //เปลี่ยนเป็นคอลัม review_id ก็ได้เเล้วแต่ตารางที่จะอ้่งอิง
+  $table->foreign('post_id')->references('id')->on('posts'); //เปลี่ยนเป็นคอลัม review_id ก็ได้เเล้วแต่ตารางที่จะอ้่งอิง
+  $table->integer('star_rate');
+  $table->timestamps();
+});
